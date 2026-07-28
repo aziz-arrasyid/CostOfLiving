@@ -10,6 +10,10 @@ namespace Player.Movement
         [SerializeField] private GroundMovement groundMovement = new GroundMovement();
         [SerializeField] private AirMovement airMovement = new AirMovement();
 
+        [Header("Camera-relative movement")]
+        [Tooltip("Transform kamera (CameraRig atau Camera.main). Kalau kosong, fallback ke world-space.")]
+        [SerializeField] private Transform cameraTransform;
+
         private const float GroundedStickVelocity = -2f;
 
         private CharacterController _controller;
@@ -48,6 +52,7 @@ namespace Player.Movement
         {
             IsGrounded = _controller.isGrounded;
 
+            Vector3 moveDirection = GetCameraRelativeDirection(_input.MoveInput);
             Vector3 horizontalVelocity;
 
             if (IsGrounded)
@@ -58,11 +63,11 @@ namespace Player.Movement
                 }
 
                 horizontalVelocity = groundMovement.CalculateVelocity(
-                    _input.MoveInput, _input.RunHeld, transform, Time.deltaTime);
+                    moveDirection, _input.RunHeld, transform, Time.deltaTime);
             }
             else
             {
-                horizontalVelocity = airMovement.CalculateHorizontalVelocity(_input.MoveInput);
+                horizontalVelocity = airMovement.CalculateHorizontalVelocity(moveDirection);
                 _verticalVelocity = airMovement.ApplyGravity(_verticalVelocity, Time.deltaTime);
             }
 
@@ -70,6 +75,25 @@ namespace Player.Movement
             _controller.Move(finalVelocity * Time.deltaTime);
 
             Velocity = finalVelocity;
+        }
+
+        private Vector3 GetCameraRelativeDirection(Vector2 moveInput)
+        {
+            if (cameraTransform == null)
+            {
+                return Vector3.ClampMagnitude(new Vector3(moveInput.x, 0f, moveInput.y), 1f);
+            }
+
+            Vector3 camForward = cameraTransform.forward;
+            camForward.y = 0f;
+            camForward.Normalize();
+
+            Vector3 camRight = cameraTransform.right;
+            camRight.y = 0f;
+            camRight.Normalize();
+
+            Vector3 direction = camForward * moveInput.y + camRight * moveInput.x;
+            return Vector3.ClampMagnitude(direction, 1f);
         }
 
         private void HandleJumpPressed()

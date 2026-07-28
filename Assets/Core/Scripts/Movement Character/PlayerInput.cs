@@ -13,6 +13,8 @@ namespace Player.Input
 
         public bool RunHeld { get; private set; }
 
+        public Vector2 LookInput { get; private set; }
+
         public event Action JumpPressed;
 
         private void Awake()
@@ -31,6 +33,9 @@ namespace Player.Input
             _inputActions.Player.Run.canceled += OnRunCanceled;
 
             _inputActions.Player.Jump.performed += OnJumpPerformed;
+
+            _inputActions.Player.Look.performed += OnLookPerformed;
+            _inputActions.Player.Look.canceled += OnLookCanceled;
         }
 
         private void OnDisable()
@@ -43,6 +48,9 @@ namespace Player.Input
 
             _inputActions.Player.Jump.performed -= OnJumpPerformed;
 
+            _inputActions.Player.Look.performed -= OnLookPerformed;
+            _inputActions.Player.Look.canceled -= OnLookCanceled;
+
             _inputActions.Player.Disable();
         }
 
@@ -53,5 +61,8 @@ namespace Player.Input
         private void OnRunCanceled(InputAction.CallbackContext ctx) => RunHeld = false;
 
         private void OnJumpPerformed(InputAction.CallbackContext ctx) => JumpPressed?.Invoke();
+
+        private void OnLookPerformed(InputAction.CallbackContext ctx) => LookInput = ctx.ReadValue<Vector2>();
+        private void OnLookCanceled(InputAction.CallbackContext ctx) => LookInput = Vector2.zero;
     }
 }

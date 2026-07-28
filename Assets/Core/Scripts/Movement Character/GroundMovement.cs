@@ -14,19 +14,16 @@ namespace Player.Movement
 
         public float CurrentSpeed { get; private set; }
 
-        public Vector3 CalculateVelocity(Vector2 moveInput, bool runHeld, Transform playerTransform, float deltaTime)
+        public Vector3 CalculateVelocity(Vector3 moveDirection, bool runHeld, Transform playerTransform, float deltaTime)
         {
-            Vector3 inputDirection = new Vector3(moveInput.x, 0f, moveInput.y);
-            inputDirection = Vector3.ClampMagnitude(inputDirection, 1f);
-
-            bool isMoving = inputDirection.sqrMagnitude > 0.0001f;
+            bool isMoving = moveDirection.sqrMagnitude > 0.0001f;
             CurrentSpeed = isMoving ? (runHeld ? runSpeed : walkSpeed) : 0f;
 
-            Vector3 horizontalVelocity = inputDirection * CurrentSpeed;
+            Vector3 horizontalVelocity = moveDirection * CurrentSpeed;
 
             if (isMoving)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(inputDirection, Vector3.up);
+                Quaternion targetRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
                 playerTransform.rotation = Quaternion.Slerp(
                     playerTransform.rotation,
                     targetRotation,

@@ -2,6 +2,16 @@ using UnityEngine;
 
 namespace Player.Movement
 {
+    /// <summary>
+    /// Layer "Movement System" (khusus airborne) dari alur:
+    /// PlayerInput -> [AirMovement] -> PlayerMotor (Physics)
+    ///
+    /// Tugasnya menghitung:
+    /// 1. Velocity vertikal (gravity saat naik/turun, jump force saat mulai lompat)
+    /// 2. Velocity horizontal terbatas saat di udara (air control)
+    ///
+    /// Tidak menyentuh CharacterController sama sekali — itu tugas PlayerMotor.
+    /// </summary>
     [System.Serializable]
     public class AirMovement
     {
@@ -23,12 +33,9 @@ namespace Player.Movement
 
         public float GetJumpVelocity() => jumpForce;
 
-        public Vector3 CalculateHorizontalVelocity(Vector2 moveInput)
+        public Vector3 CalculateHorizontalVelocity(Vector3 moveDirection)
         {
-            Vector3 direction = new Vector3(moveInput.x, 0f, moveInput.y);
-            direction = Vector3.ClampMagnitude(direction, 1f);
-
-            return direction * airSpeed;
+            return moveDirection * airSpeed;
         }
 
         public bool IsAscending(float verticalVelocity) => verticalVelocity > 0f;
