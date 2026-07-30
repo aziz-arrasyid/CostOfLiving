@@ -1191,6 +1191,42 @@ PrefabInstance:
       propertyPath: m_Name
       value: Debug
       objectReference: {fileID: 0}
+    - target: {fileID: 1804770497246241223, guid: 91fc90e91f1cc684ab80730c1712f916, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1188289437}
+    - target: {fileID: 1804770497246241223, guid: 91fc90e91f1cc684ab80730c1712f916, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetTimeActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 4671419725591759266, guid: 91fc90e91f1cc684ab80730c1712f916, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4671419725591759266, guid: 91fc90e91f1cc684ab80730c1712f916, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4671419725591759266, guid: 91fc90e91f1cc684ab80730c1712f916, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1188289437}
+    - target: {fileID: 4671419725591759266, guid: 91fc90e91f1cc684ab80730c1712f916, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4671419725591759266, guid: 91fc90e91f1cc684ab80730c1712f916, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetTimeActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 4671419725591759266, guid: 91fc90e91f1cc684ab80730c1712f916, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: Game.System.TimeManager, Game.System
+      objectReference: {fileID: 0}
+    - target: {fileID: 4671419725591759266, guid: 91fc90e91f1cc684ab80730c1712f916, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1201,6 +1237,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 148619627417889536, guid: 91fc90e91f1cc684ab80730c1712f916, type: 3}
   m_PrefabInstance: {fileID: 932798151}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1044397369 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2549374533683057465, guid: 91fc90e91f1cc684ab80730c1712f916, type: 3}
+  m_PrefabInstance: {fileID: 932798151}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1001 &1188289436
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1249,6 +1296,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5535301183232648480, guid: 0c2b9dd4de9748844bb915b35aa8f8a2, type: 3}
+      propertyPath: baseTime
+      value: 
+      objectReference: {fileID: 1440691796}
+    - target: {fileID: 5535301183232648480, guid: 0c2b9dd4de9748844bb915b35aa8f8a2, type: 3}
+      propertyPath: dateText
+      value: 
+      objectReference: {fileID: 1044397369}
+    - target: {fileID: 5535301183232648480, guid: 0c2b9dd4de9748844bb915b35aa8f8a2, type: 3}
+      propertyPath: SetToWorkingFinish
+      value: 
+      objectReference: {fileID: 1549767955}
+    - target: {fileID: 5535301183232648480, guid: 0c2b9dd4de9748844bb915b35aa8f8a2, type: 3}
+      propertyPath: workingHoursReadyStatus
+      value: 
+      objectReference: {fileID: 1450671269}
+    - target: {fileID: 5535301183232648480, guid: 0c2b9dd4de9748844bb915b35aa8f8a2, type: 3}
+      propertyPath: debtCrisisChaseReadyStatus
+      value: 
+      objectReference: {fileID: 1776377135}
     - target: {fileID: 5867431510345984544, guid: 0c2b9dd4de9748844bb915b35aa8f8a2, type: 3}
       propertyPath: m_Name
       value: MainWorldManager
@@ -1258,6 +1325,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c2b9dd4de9748844bb915b35aa8f8a2, type: 3}
+--- !u!114 &1188289437 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5535301183232648480, guid: 0c2b9dd4de9748844bb915b35aa8f8a2, type: 3}
+  m_PrefabInstance: {fileID: 1188289436}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb00aae9b98987e4d977981363494d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.System::Game.System.TimeManager
 --- !u!1 &1383561529
 GameObject:
   m_ObjectHideFlags: 0
@@ -1360,6 +1438,28 @@ Transform:
   - {fileID: 372005983}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1440691796 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6631394795449895612, guid: 91fc90e91f1cc684ab80730c1712f916, type: 3}
+  m_PrefabInstance: {fileID: 932798151}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+--- !u!114 &1450671269 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7146203054982329619, guid: 91fc90e91f1cc684ab80730c1712f916, type: 3}
+  m_PrefabInstance: {fileID: 932798151}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &1497508368
 GameObject:
   m_ObjectHideFlags: 0
@@ -1472,6 +1572,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1383561530}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &1549767955 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9014830911569518664, guid: 91fc90e91f1cc684ab80730c1712f916, type: 3}
+  m_PrefabInstance: {fileID: 932798151}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1 &1576154641
 GameObject:
   m_ObjectHideFlags: 0
@@ -1584,6 +1695,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1383561530}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1776377135 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6123448349866990878, guid: 91fc90e91f1cc684ab80730c1712f916, type: 3}
+  m_PrefabInstance: {fileID: 932798151}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &2121862549
 GameObject:
   m_ObjectHideFlags: 0
