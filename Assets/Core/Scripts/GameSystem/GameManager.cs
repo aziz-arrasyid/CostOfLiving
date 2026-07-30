@@ -28,6 +28,22 @@ namespace Game.System
             settings = LoadData<Settings>("settings");
         }
 
+        private void NewData<T>(string file) where T : new()
+        {
+            TextAsset jsonAsset = Resources.Load<TextAsset>(file);
+
+            if (jsonAsset != null)
+            {
+                T newData = JsonUtility.FromJson<T>(jsonAsset.text);
+                SaveData(newData, file);
+            }
+        }
+
+        public void NewGame()
+        {
+            NewData<CurrentDateTime>("dateTime");
+        }
+
         public void SaveData<T>(T data, string file)
         {
             string json = JsonUtility.ToJson(data, true);

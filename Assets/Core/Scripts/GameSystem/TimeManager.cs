@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System;
+using System.Globalization;
 using UnityEngine.UI;
 
 [Serializable]
@@ -71,6 +72,7 @@ namespace Game.System
 
         [Header("UI")]
         #region UI Debug
+        [SerializeField] private TextMeshProUGUI dateText;
         [SerializeField] private TextMeshProUGUI baseTime;
         [SerializeField] private TextMeshProUGUI workingHoursReadyStatus;
         [SerializeField] private TextMeshProUGUI debtCrisisChaseReadyStatus;
@@ -78,6 +80,7 @@ namespace Game.System
         #endregion
 
         private float currentTime;
+        private DateTime currentDate;
         private float endHourFloat;
         private float timeMultiplier;
         private bool isTimeRunning;
@@ -120,6 +123,8 @@ namespace Game.System
             if (currentTime >= endHourFloat)
             {
                 currentTime = endHourFloat;
+                currentDate = currentDate.AddDays(1);
+                SaveDateData();
                 isTimeRunning = false;
             }
 
@@ -128,10 +133,40 @@ namespace Game.System
             UpdateUI();
         }
 
+        #region Date Time
+        private void LoadDateData()
+        {
+            CurrentDateTime loadDateData = GameManager.Instance.LoadData<CurrentDateTime>("dateTime");
+
+            if (!string.IsNullOrEmpty(loadDateData.currentDateTime))
+            {
+                currentDate = DateTime.Parse(loadDateData.currentDateTime);
+                UpdateDateUI();
+            }
+        }
+
+        private void SaveDateData()
+        {
+            CurrentDateTime saveDateData = new()
+            {
+                currentDateTime = currentDate.ToString("yyyy-MM-dd")
+            };
+
+            GameManager.Instance.SaveData(saveDateData, "dateTime");
+            LoadDateData();
+        }
+
+        private void UpdateDateUI()
+        {
+            if (dateText == null) return;
+            dateText.text = currentDate.ToString("dd MMMM yyyy", new CultureInfo("id-ID"));
+        }
+        #endregion
+
         private void UpdateUI()
         {
             int hours = Mathf.FloorToInt(currentTime);
-            int minutes = Mathf.FloorToInt(currentTime % 1 * 60f);
+            int minutes = Mathf.FloorToInt(currentTime % 1f * 60f);
 
             baseTime.text = string.Format("{0:00}:{1:00}", hours, minutes);
 
@@ -161,6 +196,8 @@ namespace Game.System
         {
             currentTime = startTime.ToFloat();
             endHourFloat = endTime.ToFloat();
+
+            LoadDateData();
 
             float totalTimeInGame = endHourFloat - currentTime;
             float totalSecondsRealWorld = realMinutesPerDay * 60f;
