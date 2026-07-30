@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.System
@@ -20,5 +21,21 @@ namespace Game.System
     public class PlayerData
     {
         public int money;
+        public float sanity;
+    }
+
+    [Serializable]
+    public class ModelMathQuestion
+    {
+        public string question;
+        public List<int> options;
+        public int correctAnswer;
+
+        public ModelMathQuestion(string Question, List<int> Options, int CorrectAnswer)
+        {
+            question = Question;
+            options = Options;
+            correctAnswer = CorrectAnswer;
+        }
     }
 }
