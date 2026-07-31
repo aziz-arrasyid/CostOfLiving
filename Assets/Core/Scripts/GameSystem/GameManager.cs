@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.IO;
 using UnityEngine;
 
@@ -73,5 +74,12 @@ namespace Game.System
         }
 
         public string FilePath(string file) { return $"{Application.persistentDataPath}/{file}.json"; }
+
+        #region Utility
+        public string CurrencyFormat(int money)
+        {
+            return money.ToString("N0", new CultureInfo("id-ID"));
+        }
+        #endregion
     }
 }
