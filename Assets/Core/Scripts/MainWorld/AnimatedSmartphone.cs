@@ -15,7 +15,6 @@ namespace Main.World
         [SerializeField] private RectTransform pinjolPanel;
         [SerializeField] private RectTransform phone;
 
-        private bool APKIsOpen;
         private RectTransform currentAPKOpen;
         private Sequence animPhone;
 
@@ -59,7 +58,7 @@ namespace Main.World
             .Group(Tween.UIAnchoredPositionY(target: panel, endValue: openTargetY, duration: openDuration, ease: openEase));
 
             currentAPKOpen = panel;
-            
+
         }
 
         private void CloeAPKWhilePhoneClosed()
@@ -74,12 +73,13 @@ namespace Main.World
             CanvasGroup cgCurrentAPKOpen = currentAPKOpen.GetComponent<CanvasGroup>();
             animAPK
             .Group(Tween.Alpha(target: cgCurrentAPKOpen, endValue: closeAlpha, duration: closeDuration - 0.1f, ease: closeEase))
-            .Group(Tween.UIAnchoredPositionY(target: currentAPKOpen, endValue: closeTargetY, duration: closeDuration, ease: closeEase));
+            .Group(Tween.UIAnchoredPositionY(target: currentAPKOpen, endValue: closeTargetY, duration: closeDuration, ease: closeEase))
+            .OnComplete(target: ShopManager.Instance, target => target.ResetItemSelected());
 
             currentAPKOpen = null;
         }
 
-        private void PhoneStateOpen(bool status) 
+        private void PhoneStateOpen(bool status)
         {
             if (animPhone.isAlive) animPhone.Stop();
             animPhone = Sequence.Create();
