@@ -38,4 +38,18 @@ namespace Game.System
             correctAnswer = CorrectAnswer;
         }
     }
+
+    [Serializable]
+    public class ItemShopDatabase
+    {
+        public List<ItemShop> items;
+    }
+
+    [Serializable]
+    public class ItemShop
+    {
+        public string id;
+        public string name;
+        public int buy;
+    }
 }
