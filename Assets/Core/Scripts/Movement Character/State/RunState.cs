@@ -13,7 +13,7 @@ namespace Player.StateMachine
 
         public void Enter()
         {
-            _sm.Animator?.SetState(PlayerAnimState.Run);
+            // _sm.Animator?.SetState(PlayerAnimState.Run);
             _sm.Audio?.PlayRunFootsteps();
         }
 

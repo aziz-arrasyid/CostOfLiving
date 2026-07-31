@@ -4,8 +4,8 @@ namespace Player.Animation
     {
         Idle,
         Walk,
-        Run,
-        Jump,
-        Fall
+        // Run,
+        // Jump,
+        // Fall
     }
 }
