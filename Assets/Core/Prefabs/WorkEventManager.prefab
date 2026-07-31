@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8007177488547835014}
+  - component: {fileID: 6566215960783765594}
   m_Layer: 0
   m_Name: WorkEventManager
   m_TagString: Untagged
@@ -31,3 +32,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6566215960783765594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1274520059647437568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6f1a8ee3528fd4f89d35f86b7f43af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Work.Event::Work.Event.WorkEventManager
+  timeRemaining: 15
+  mathQuestions: []
+  timerCountdownText: {fileID: 0}
+  mathQuestionText: {fileID: 0}
+  nextMathQuestionBtn: {fileID: 0}
+  mathOptions:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  startQuizBtn: {fileID: 0}
