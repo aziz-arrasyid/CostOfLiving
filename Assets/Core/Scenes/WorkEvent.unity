@@ -722,6 +722,64 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &604413705
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 604413707}
+  - component: {fileID: 604413706}
+  m_Layer: 0
+  m_Name: WorkEventManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &604413706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604413705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6f1a8ee3528fd4f89d35f86b7f43af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Work.Event::Work.Event.WorkEventManager
+  timeRemaining: 15
+  baseMoneyGet: 22500
+  mathQuestions: []
+  moneyEarnedText: {fileID: 1498319060}
+  totalMathQuestionsText: {fileID: 1397101932}
+  timerCountdownText: {fileID: 1359714208}
+  mathQuestionText: {fileID: 1126893716}
+  nextMathQuestionBtn: {fileID: 1867379980}
+  mathOptions:
+  - {fileID: 1411851307}
+  - {fileID: 634366289}
+  - {fileID: 226798647}
+  - {fileID: 446586823}
+  startQuizBtn: {fileID: 1818157372}
+--- !u!4 &604413707
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604413705}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 756.7044, y: 155.64792, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &634366283
 GameObject:
   m_ObjectHideFlags: 0
@@ -3243,111 +3301,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1912069159}
   m_CullTransparentMesh: 1
---- !u!1001 &7042256574933263158
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1274520059647437568, guid: 68c19440cd8cdbb42beb9153b50d2036, type: 3}
-      propertyPath: m_Name
-      value: WorkEventManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 6566215960783765594, guid: 68c19440cd8cdbb42beb9153b50d2036, type: 3}
-      propertyPath: optionGroup
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6566215960783765594, guid: 68c19440cd8cdbb42beb9153b50d2036, type: 3}
-      propertyPath: baseMoneyGet
-      value: 22500
-      objectReference: {fileID: 0}
-    - target: {fileID: 6566215960783765594, guid: 68c19440cd8cdbb42beb9153b50d2036, type: 3}
-      propertyPath: startQuizBtn
-      value: 
-      objectReference: {fileID: 1818157372}
-    - target: {fileID: 6566215960783765594, guid: 68c19440cd8cdbb42beb9153b50d2036, type: 3}
-      propertyPath: moneyEarnedText
-      value: 
-      objectReference: {fileID: 1498319060}
-    - target: {fileID: 6566215960783765594, guid: 68c19440cd8cdbb42beb9153b50d2036, type: 3}
-      propertyPath: mathQuestionText
-      value: 
-      objectReference: {fileID: 1126893716}
-    - target: {fileID: 6566215960783765594, guid: 68c19440cd8cdbb42beb9153b50d2036, type: 3}
-      propertyPath: timerCountdownText
-      value: 
-      objectReference: {fileID: 1359714208}
-    - target: {fileID: 6566215960783765594, guid: 68c19440cd8cdbb42beb9153b50d2036, type: 3}
-      propertyPath: nextMathQuestionBtn
-      value: 
-      objectReference: {fileID: 1867379980}
-    - target: {fileID: 6566215960783765594, guid: 68c19440cd8cdbb42beb9153b50d2036, type: 3}
-      propertyPath: totalMathQuestionsText
-      value: 
-      objectReference: {fileID: 1397101932}
-    - target: {fileID: 6566215960783765594, guid: 68c19440cd8cdbb42beb9153b50d2036, type: 3}
-      propertyPath: 'mathOptions.Array.data[0]'
-      value: 
-      objectReference: {fileID: 1411851307}
-    - target: {fileID: 6566215960783765594, guid: 68c19440cd8cdbb42beb9153b50d2036, type: 3}
-      propertyPath: 'mathOptions.Array.data[1]'
-      value: 
-      objectReference: {fileID: 634366289}
-    - target: {fileID: 6566215960783765594, guid: 68c19440cd8cdbb42beb9153b50d2036, type: 3}
-      propertyPath: 'mathOptions.Array.data[2]'
-      value: 
-      objectReference: {fileID: 226798647}
-    - target: {fileID: 6566215960783765594, guid: 68c19440cd8cdbb42beb9153b50d2036, type: 3}
-      propertyPath: 'mathOptions.Array.data[3]'
-      value: 
-      objectReference: {fileID: 446586823}
-    - target: {fileID: 8007177488547835014, guid: 68c19440cd8cdbb42beb9153b50d2036, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 871.01373
-      objectReference: {fileID: 0}
-    - target: {fileID: 8007177488547835014, guid: 68c19440cd8cdbb42beb9153b50d2036, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 415.45093
-      objectReference: {fileID: 0}
-    - target: {fileID: 8007177488547835014, guid: 68c19440cd8cdbb42beb9153b50d2036, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8007177488547835014, guid: 68c19440cd8cdbb42beb9153b50d2036, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8007177488547835014, guid: 68c19440cd8cdbb42beb9153b50d2036, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8007177488547835014, guid: 68c19440cd8cdbb42beb9153b50d2036, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8007177488547835014, guid: 68c19440cd8cdbb42beb9153b50d2036, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8007177488547835014, guid: 68c19440cd8cdbb42beb9153b50d2036, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8007177488547835014, guid: 68c19440cd8cdbb42beb9153b50d2036, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8007177488547835014, guid: 68c19440cd8cdbb42beb9153b50d2036, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 68c19440cd8cdbb42beb9153b50d2036, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -3356,5 +3309,5 @@ SceneRoots:
   - {fileID: 133946779}
   - {fileID: 869810446}
   - {fileID: 1717449736}
-  - {fileID: 7042256574933263158}
+  - {fileID: 604413707}
   - {fileID: 1582914940}
