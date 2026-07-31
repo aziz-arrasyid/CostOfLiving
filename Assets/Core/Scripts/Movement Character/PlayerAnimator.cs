@@ -12,7 +12,7 @@ namespace Player.Animation
         [SerializeField] private Renderer debugRenderer;
         [SerializeField] private Color idleColor = Color.white;
         [SerializeField] private Color walkColor = Color.yellow;
-        [SerializeField] private Color runColor = new Color(1f, 0.5f, 0f); 
+        [SerializeField] private Color runColor = new Color(1f, 0.5f, 0f);
         [SerializeField] private Color jumpColor = Color.cyan;
         [SerializeField] private Color fallColor = Color.red;
 
@@ -30,9 +30,9 @@ namespace Player.Animation
             {
                 PlayerAnimState.Idle => idleColor,
                 PlayerAnimState.Walk => walkColor,
-                PlayerAnimState.Run => runColor,
-                PlayerAnimState.Jump => jumpColor,
-                PlayerAnimState.Fall => fallColor,
+                // PlayerAnimState.Run => runColor,
+                // PlayerAnimState.Jump => jumpColor,
+                // PlayerAnimState.Fall => fallColor,
                 _ => Color.magenta
             };
 
@@ -43,7 +43,7 @@ namespace Player.Animation
         {
             if (animator == null) return;
 
-            animator.CrossFade(state.ToString(), crossFadeDuration);
+            animator.CrossFade(state.ToString(), crossFadeDuration, -1, 0f);
         }
     }
 }

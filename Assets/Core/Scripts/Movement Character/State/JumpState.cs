@@ -14,7 +14,7 @@ namespace Player.StateMachine
 
         public void Enter()
         {
-            _sm.Animator?.SetState(PlayerAnimState.Jump);
+            // _sm.Animator?.SetState(PlayerAnimState.Jump);
             _sm.Audio?.StopFootsteps();
             _sm.Audio?.PlayJumpSound();
         }

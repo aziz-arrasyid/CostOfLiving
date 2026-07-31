@@ -14,7 +14,7 @@ namespace Player.StateMachine
 
         public void Enter()
         {
-            _sm.Animator?.SetState(PlayerAnimState.Fall);
+            // _sm.Animator?.SetState(PlayerAnimState.Fall);
             _sm.Audio?.StopFootsteps();
         }
 
