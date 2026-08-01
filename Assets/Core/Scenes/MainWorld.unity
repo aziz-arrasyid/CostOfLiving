@@ -694,6 +694,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 125298120}
   m_CullTransparentMesh: 1
+--- !u!1001 &189935194
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1205480073349622790, guid: 2ae11cd6d1f35b9469b8bdd878c98196, type: 3}
+      propertyPath: m_Name
+      value: TransitionManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 3145734526965812222, guid: 2ae11cd6d1f35b9469b8bdd878c98196, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 860.96045
+      objectReference: {fileID: 0}
+    - target: {fileID: 3145734526965812222, guid: 2ae11cd6d1f35b9469b8bdd878c98196, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 423.907
+      objectReference: {fileID: 0}
+    - target: {fileID: 3145734526965812222, guid: 2ae11cd6d1f35b9469b8bdd878c98196, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3145734526965812222, guid: 2ae11cd6d1f35b9469b8bdd878c98196, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3145734526965812222, guid: 2ae11cd6d1f35b9469b8bdd878c98196, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3145734526965812222, guid: 2ae11cd6d1f35b9469b8bdd878c98196, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3145734526965812222, guid: 2ae11cd6d1f35b9469b8bdd878c98196, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3145734526965812222, guid: 2ae11cd6d1f35b9469b8bdd878c98196, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3145734526965812222, guid: 2ae11cd6d1f35b9469b8bdd878c98196, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3145734526965812222, guid: 2ae11cd6d1f35b9469b8bdd878c98196, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2ae11cd6d1f35b9469b8bdd878c98196, type: 3}
 --- !u!1 &208297599
 GameObject:
   m_ObjectHideFlags: 0
@@ -4310,7 +4367,7 @@ GameObject:
   - component: {fileID: 946510447}
   - component: {fileID: 946510446}
   - component: {fileID: 946510445}
-  - component: {fileID: 946510444}
+  - component: {fileID: 946510448}
   m_Layer: 0
   m_Name: TP To Work
   m_TagString: Untagged
@@ -4334,19 +4391,6 @@ Transform:
   - {fileID: 440669529}
   m_Father: {fileID: 904469952}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &946510444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 946510442}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1e0aa72a58bcfc4fb05a1aca4933d91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Main.World::Main.World.Teleport
-  teleportDestination: {fileID: 0}
 --- !u!65 &946510445
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4425,6 +4469,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 946510442}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &946510448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 946510442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6141a1a382ab52149a738759b5287625, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.System::Game.System.TeleportationScene
+  sceneDestination: WorkEvent
 --- !u!1 &976563879
 GameObject:
   m_ObjectHideFlags: 0
@@ -109807,3 +109864,4 @@ SceneRoots:
   - {fileID: 510519412}
   - {fileID: 904469952}
   - {fileID: 208605070}
+  - {fileID: 189935194}
