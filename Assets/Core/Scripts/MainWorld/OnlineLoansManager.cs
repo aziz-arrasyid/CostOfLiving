@@ -1,15 +1,23 @@
 using System.Collections.Generic;
 using Game.System;
+using TMPro;
 using UnityEngine;
 
 namespace Main.World
 {
     public class OnlineLoansManager : MonoBehaviour
     {
+        [Header("Prefabs")]
+        [SerializeField] private GameObject loansItem;
         [Header("Online Loans Data")]
         [SerializeField] private List<ModelOnlineLoans> modelOnlineLoansLegal;
         [SerializeField] private List<ModelOnlineLoans> modelOnlineLoansIllegal;
         [SerializeField] private int availableLoanFunds;
+
+        [Header("UI")]
+        [SerializeField] private RectTransform loansLegalContent;
+        [SerializeField] private RectTransform loansIllegalContent;
+        [SerializeField] private List<Sprite> loansColor;
 
         #region Online Loans Legal
         [Header("Online Loans Legal Setting")]
@@ -85,6 +93,39 @@ namespace Main.World
                 else
                 {
                     modelOnlineLoansIllegal.Add(newOnlineLoans);
+                }
+            }
+
+            UpdateOnlineLoansUI(true);
+            UpdateOnlineLoansUI(false);
+        }
+
+        private void UpdateOnlineLoansUI(bool isLegal)
+        {
+            if (isLegal)
+            {
+                for (int i = 0; i < modelOnlineLoansLegal.Count; i++)
+                {
+                    GameObject newLoansItems = Instantiate(loansItem);
+                    newLoansItems.transform.SetParent(loansLegalContent);
+
+                    ItemPinjol itemPinjol = newLoansItems.GetComponent<ItemPinjol>();
+
+                    itemPinjol.modelOnlineLoans = modelOnlineLoansLegal[i];
+                    itemPinjol.UpdateUI(loansColor[0]);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < modelOnlineLoansIllegal.Count; i++)
+                {
+                    GameObject newLoansItems = Instantiate(loansItem);
+                    newLoansItems.transform.SetParent(loansIllegalContent);
+
+                    ItemPinjol itemPinjol = newLoansItems.GetComponent<ItemPinjol>();
+
+                    itemPinjol.modelOnlineLoans = modelOnlineLoansIllegal[i];
+                    itemPinjol.UpdateUI(loansColor[1]);
                 }
             }
         }
