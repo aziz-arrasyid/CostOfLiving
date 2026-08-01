@@ -10,9 +10,11 @@ namespace Main.World
         [SerializeField] private Button phoneIcon;
         [SerializeField] private Button phoneExitIcon;
         [SerializeField] private Button shopAPK;
-        [SerializeField] private Button pinjolAPK;
+        [SerializeField] private Button pinjolLegalAPK;
+        [SerializeField] private Button pinjolIlegalAPK;
         [SerializeField] private RectTransform shopPanel;
-        [SerializeField] private RectTransform pinjolPanel;
+        [SerializeField] private RectTransform pinjolLegalPanel;
+        [SerializeField] private RectTransform pinjolIllegalPanel;
         [SerializeField] private RectTransform phone;
 
         private RectTransform currentAPKOpen;
@@ -23,7 +25,8 @@ namespace Main.World
             phoneIcon.onClick.AddListener(() => PhoneStateOpen(true));
             phoneExitIcon.onClick.AddListener(() => PhoneStateOpen(false));
             shopAPK.onClick.AddListener(() => OnAPKClicked(shopPanel));
-            pinjolAPK.onClick.AddListener(() => OnAPKClicked(pinjolPanel));
+            pinjolLegalAPK.onClick.AddListener(() => OnAPKClicked(pinjolLegalPanel));
+            pinjolIlegalAPK.onClick.AddListener(() => OnAPKClicked(pinjolIllegalPanel));
         }
 
         private void OnAPKClicked(RectTransform panel)
