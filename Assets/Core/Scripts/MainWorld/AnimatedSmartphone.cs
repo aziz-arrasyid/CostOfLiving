@@ -30,12 +30,12 @@ namespace Main.World
         {
             if (currentAPKOpen == panel) return;
 
-            float openTargetY = 0f;
+            float openTargetY = 47f;
             float openAlpha = 1f;
             float openDuration = 0.4f;
             Ease openEase = Ease.OutSine;
 
-            float closeTargetY = -610f;
+            float closeTargetY = -578f;
             float closeAlpha = 0f;
             float closeDuration = 0.4f;
             Ease closeEase = Ease.InSine;

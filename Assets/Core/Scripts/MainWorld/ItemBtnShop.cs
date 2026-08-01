@@ -7,6 +7,7 @@ namespace Main.World
     public class ItemBtnShop : MonoBehaviour
     {
         public ItemShop item;
+        public Image icon;
 
         private void Start()
         {
