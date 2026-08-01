@@ -2617,8 +2617,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1086162086}
   - component: {fileID: 1086162087}
+  - component: {fileID: 1086162088}
   m_Layer: 5
-  m_Name: Pinjol
+  m_Name: Online Loans
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2656,6 +2657,33 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1086162088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1086162085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8c5fde06d3241244b8722980c5b902f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Main.World::Main.World.OnlineLoansManager
+  modelOnlineLoansLegal: []
+  modelOnlineLoansIllegal: []
+  availableLoanFunds: 8
+  minReceivedAmountLegal: 10
+  maxReceivedAmountLegal: 41
+  minLoanTenureDaysLegal: 30
+  maxLoanTenureDaysLegal: 90
+  minDailyInterestRateLegal: 0.2
+  maxDailyInterestRateLegal: 1
+  minReceivedAmountIllegal: 10
+  maxReceivedAmountIllegal: 26
+  minLoanTenureDaysIllegal: 30
+  maxLoanTenureDaysIllegal: 90
+  minDailyInterestRateIllegal: 0.2
+  maxDailyInterestRateIllegal: 2
 --- !u!1001 &1188289436
 PrefabInstance:
   m_ObjectHideFlags: 0
