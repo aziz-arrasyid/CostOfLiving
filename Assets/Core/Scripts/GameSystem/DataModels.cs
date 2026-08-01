@@ -52,4 +52,13 @@ namespace Game.System
         public string name;
         public int buy;
     }
+
+    [Serializable]
+    public class ModelOnlineLoans
+    {
+        public int receivedAmount;
+        public int loanTenureDays;
+        public float dailyInterestRate;
+        public int totalRepaymentAmount;
+    }
 }
