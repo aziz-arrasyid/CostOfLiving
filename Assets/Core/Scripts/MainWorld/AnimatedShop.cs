@@ -7,6 +7,7 @@ namespace Main.World
     {
         [Header("UI")]
         [SerializeField] private RectTransform previewContent;
+        [SerializeField] private RectTransform titleShop;
         private CanvasGroup cgPreviewContent;
         private bool isFirstView;
 
@@ -28,7 +29,8 @@ namespace Main.World
 
             animPreview
             .Group(Tween.Alpha(target: cgPreviewContent, endValue: 1f, duration: duration - 0.1f, ease: Ease.OutSine))
-            .Group(Tween.UIAnchoredPositionX(target: previewContent, endValue: -1610f, duration: duration, ease: Ease.OutSine));
+            .Group(Tween.UIAnchoredPositionX(target: previewContent, endValue: -1588f, duration: duration, ease: Ease.OutSine))
+            .Group(Tween.UIAnchoredPositionX(target: titleShop, endValue: -1610.1f, duration: duration, ease: Ease.OutSine));
 
             isFirstView = true;
         }
@@ -38,9 +40,13 @@ namespace Main.World
             isFirstView = false;
             cgPreviewContent.alpha = 0f;
 
-            Vector2 newPos = previewContent.anchoredPosition;
-            newPos.x = -1163f;
-            previewContent.anchoredPosition = newPos;
+            Vector2 newPosPreview = previewContent.anchoredPosition;
+            newPosPreview.x = -1258f;
+            previewContent.anchoredPosition = newPosPreview;
+
+            Vector2 newPosTitleShop = titleShop.anchoredPosition;
+            newPosTitleShop.x = -1281.2f;
+            titleShop.anchoredPosition = newPosTitleShop;
         }
     }
 }

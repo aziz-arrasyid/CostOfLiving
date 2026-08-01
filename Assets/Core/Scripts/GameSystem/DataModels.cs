@@ -50,6 +50,7 @@ namespace Game.System
     {
         public string id;
         public string name;
+        public int moneyPlus;
         public int buy;
     }
 

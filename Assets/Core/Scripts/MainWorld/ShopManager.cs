@@ -2,6 +2,8 @@ using UnityEngine;
 using Game.System;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using TMPro;
 
 namespace Main.World
 {
@@ -16,11 +18,16 @@ namespace Main.World
         [Space]
 
         [Header("Item Shop")]
+        [SerializeField] private List<Sprite> image;
         [SerializeField] private List<ItemShop> items;
         [SerializeField] private ItemShop item;
 
         [Header("UI")]
         [SerializeField] private RectTransform contentShop;
+        [SerializeField] private TextMeshProUGUI itemShopName;
+        [SerializeField] private TextMeshProUGUI itemShopMoneyPlus;
+        [SerializeField] private TextMeshProUGUI itemShopPrice;
+        [SerializeField] private Image previewIcon;
 
         [Space]
 
@@ -41,7 +48,7 @@ namespace Main.World
         private void Start()
         {
             animatedShop = GetComponent<AnimatedShop>();
-            
+
             ItemShopDatabase itemShopDatabase = GameManager.Instance.LoadData<ItemShopDatabase>("itemShop");
             items = itemShopDatabase.items;
 
@@ -53,15 +60,26 @@ namespace Main.World
         {
             // GameObject btnObj = EventSystem.current.currentSelectedGameObject;
             item = itemShop;
+            UpdatePreviewItemUI();
+
             animatedShop.PreviewItem();
         }
 
-        public void ResetItemSelected() 
-        { 
+        public void ResetItemSelected()
+        {
             item = null;
             animatedShop.ResetPreviewItem();
         }
         #endregion
+
+        private void UpdatePreviewItemUI()
+        {
+            itemShopName.text = item.name;
+            itemShopMoneyPlus.text = $"Money+ RP. {GameManager.Instance.CurrencyFormat(item.moneyPlus)}";
+            itemShopPrice.text = $"RP. {GameManager.Instance.CurrencyFormat(item.buy)}";
+
+            previewIcon.sprite = image.Find(img => img.name == item.id);
+        }
 
         private void InitializeItemShopUI()
         {
@@ -72,6 +90,15 @@ namespace Main.World
 
                 ItemBtnShop itemBtnShop = newBtnShop.GetComponent<ItemBtnShop>();
                 itemBtnShop.item = items[i];
+
+                Image icon = itemBtnShop.icon;
+
+                Sprite targetImage = image.Find(img => img.name == itemBtnShop.item.id);
+
+                if (targetImage != null)
+                {
+                    icon.sprite = targetImage;
+                }
             }
         }
     }
