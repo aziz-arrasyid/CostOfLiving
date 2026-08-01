@@ -22,6 +22,7 @@ namespace Game.System
     {
         public int money;
         public float sanity;
+        public List<ItemShop> items;
     }
 
     [Serializable]

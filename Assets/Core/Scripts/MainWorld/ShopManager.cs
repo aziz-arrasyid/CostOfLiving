@@ -23,6 +23,7 @@ namespace Main.World
         [SerializeField] private ItemShop item;
 
         [Header("UI")]
+        [SerializeField] private Button buyBtn;
         [SerializeField] private RectTransform contentShop;
         [SerializeField] private TextMeshProUGUI itemShopName;
         [SerializeField] private TextMeshProUGUI itemShopMoneyPlus;
@@ -47,6 +48,8 @@ namespace Main.World
 
         private void Start()
         {
+            buyBtn.onClick.AddListener(OnBuyBtnClicked);
+
             animatedShop = GetComponent<AnimatedShop>();
 
             ItemShopDatabase itemShopDatabase = GameManager.Instance.LoadData<ItemShopDatabase>("itemShop");
@@ -63,6 +66,20 @@ namespace Main.World
             UpdatePreviewItemUI();
 
             animatedShop.PreviewItem();
+        }
+
+        public void OnBuyBtnClicked()
+        {
+            PlayerData playerData = GameManager.Instance.LoadData<PlayerData>("playerData");
+            if (playerData.money >= item.buy)
+            {
+                playerData.items.Add(item);
+                playerData.money -= item.buy;
+
+                GameManager.Instance.SaveData(playerData, "playerData");
+                Debug.Log(playerData);
+                MainWorldManager.Instance.UpdateMoneyUI();
+            }
         }
 
         public void ResetItemSelected()

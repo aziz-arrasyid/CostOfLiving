@@ -4,25 +4,25 @@
             "id": "item1",
             "name": "Electric Fan",
             "moneyPlus": 2000,
-            "buy": 230000
+            "buy": 10000
         },
         {
             "id": "item2",
             "name": "Laptop",
             "moneyPlus": 5000,
-            "buy": 11499000
+            "buy": 2000
         },
         {
             "id": "item3",
             "name": "Bag",
             "moneyPlus": 3000,
-            "buy": 255500
+            "buy": 5000
         },
         {
             "id": "item4",
             "name": "Motorcycle",
             "moneyPlus": 10000,
-            "buy": 24450000
+            "buy": 3000
         }
     ]
 }
