@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 using System.Linq;
 using UnityEngine.EventSystems;
+using System.Collections;
 
 namespace Work.Event
 {
@@ -32,16 +33,21 @@ namespace Work.Event
 
         [Space]
 
+        [Header("Diki Expresso")]
+        [SerializeField] private List<Sprite> dikiExpression;
+        [SerializeField] private List<Sprite> optionSelecting;
+        private Coroutine dikiExpressionRoutine;
+
+        [Space]
+
         [Header("UI")]
+        [SerializeField] private Image dikiWorking;
         [SerializeField] private TextMeshProUGUI moneyEarnedText;
         [SerializeField] private TextMeshProUGUI totalMathQuestionsText;
         [SerializeField] private TextMeshProUGUI timerCountdownText;
         [SerializeField] private TextMeshProUGUI mathQuestionText;
         [SerializeField] private Button nextMathQuestionBtn;
         [SerializeField] private List<Button> mathOptions = new();
-        #region Ddebug
-        [SerializeField] private Button startQuizBtn;
-        #endregion
 
         private void Awake()
         {
@@ -57,20 +63,22 @@ namespace Work.Event
 
         private void Start()
         {
-            startQuizBtn.onClick.AddListener(() => SetTimerCoutdownActive(true));
             nextMathQuestionBtn.onClick.AddListener(NextQuestion);
 
             RandomQuestion();
             UpdateCurrentMathQuestion();
             UpdateTimerUI();
             UpdateMoneyUI();
+
+            Waiting();
+            StartQuiz();
         }
 
         private void Update()
         {
             if (!timerIsRunning) return;
 
-            if (timeRemaining > 0)
+            if (timeRemaining >= 0)
             {
                 timeRemaining -= Time.deltaTime;
             }
@@ -78,6 +86,7 @@ namespace Work.Event
             {
                 timeRemaining = 0;
                 timerIsRunning = false;
+                StopQuiz();
             }
 
             UpdateTimerUI();
@@ -94,10 +103,53 @@ namespace Work.Event
 
             if (optionObj == null) return;
 
-            optionObj.GetComponentInChildren<Image>().color = Color.black;
+            optionObj.GetComponentInChildren<Image>().sprite = optionSelecting[1];
             currentAnswerSelected = value;
+
+            nextMathQuestionBtn.interactable = true;
+        }
+
+        public void StopQuiz()
+        {
+            for (int i = 0; i < mathOptions.Count; i++)
+            {
+                mathOptions[i].interactable = false;
+                mathOptions[i].GetComponentInChildren<Image>().sprite = optionSelecting[0];
+            }
+            nextMathQuestionBtn.interactable = false;
+
+            PlayerData newPlayerData = GameManager.Instance.LoadData<PlayerData>("playerData");
+            newPlayerData.money += moneyEarned;
+            GameManager.Instance.SaveData(newPlayerData, "playerData");
+
+            SetTimerCoutdownActive(false);
+
+            ChangeScene("MainWorld", false);
+        }
+
+        public void ChangeScene(string sceneName, bool showCursor) { TransitionManager.Instance.LoadScene(sceneName, showCursor); }
+
+        public void StartQuiz()
+        {
+            for (int i = 0; i < mathOptions.Count; i++)
+            {
+                mathOptions[i].interactable = true;
+            }
+
+            SetTimerCoutdownActive(true);
         }
         #endregion
+
+        private void Waiting()
+        {
+            for (int i = 0; i < mathOptions.Count; i++)
+            {
+                mathOptions[i].interactable = false;
+            }
+
+            nextMathQuestionBtn.interactable = false;
+        }
+
 
         private void NextQuestion()
         {
@@ -114,7 +166,7 @@ namespace Work.Event
 
         private void UpdateMathUI()
         {
-            totalMathQuestionsText.text = $"Question: {currentIndex + 1}";
+            totalMathQuestionsText.text = $"Question:{currentIndex + 1}/{mathQuestions.Count}";
             mathQuestionText.text = currentMathQuestion.question;
 
             for (int i = 0; i < mathOptions.Count; i++)
@@ -127,6 +179,36 @@ namespace Work.Event
                 char optionLetter = (char)(65 + i);
                 mathOptionsText.text = $"{optionLetter}. {optionValue}";
             }
+
+            nextMathQuestionBtn.interactable = false;
+        }
+
+        private void UpdateDikiWorkingUI(bool statusAnswer)
+        {
+            if (dikiExpressionRoutine != null)
+            {
+                StopCoroutine(dikiExpressionRoutine);
+            }
+
+            dikiExpressionRoutine = StartCoroutine(ExpressionRoutine(statusAnswer));
+        }
+
+        private IEnumerator ExpressionRoutine(bool statusAnswer)
+        {
+            if (statusAnswer)
+            {
+                dikiWorking.sprite = dikiExpression.Find(img => img.name == "correct");
+            }
+            else
+            {
+                dikiWorking.sprite = dikiExpression.Find(img => img.name == "incorrect");
+            }
+
+            yield return new WaitForSeconds(1.5f);
+
+            dikiWorking.sprite = dikiExpression.Find(img => img.name == "neutral");
+
+            dikiExpressionRoutine = null;
         }
 
         private void OptionReset()
@@ -134,7 +216,7 @@ namespace Work.Event
             for (int i = 0; i < mathOptions.Count; i++)
             {
                 Image optionText = mathOptions[i].GetComponentInChildren<Image>();
-                optionText.color = Color.white;
+                optionText.sprite = optionSelecting[0];
             }
         }
 
@@ -143,15 +225,17 @@ namespace Work.Event
             if (currentAnswerSelected == currentMathQuestion.correctAnswer)
             {
                 moneyEarned += baseMoneyGet;
+                UpdateDikiWorkingUI(true);
                 UpdateMoneyUI();
             }
             else
             {
-                // Debug.Log($"{currentIndex + 1}: Salah");
+                UpdateDikiWorkingUI(false);
             }
 
             OptionReset();
             currentAnswerSelected = 999;
+
         }
 
         private void UpdateCurrentMathQuestion()
