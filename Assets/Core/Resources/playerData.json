@@ -1,4 +1,5 @@
 {
     "money": 0,
-    "sanity": 100
+    "sanity": 100,
+    "items": []
 }
