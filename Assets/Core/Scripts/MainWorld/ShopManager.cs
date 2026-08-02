@@ -73,12 +73,20 @@ namespace Main.World
             PlayerData playerData = GameManager.Instance.LoadData<PlayerData>("playerData");
             if (playerData.money >= item.buy)
             {
-                playerData.items.Add(item);
+                ItemPlayer itemPlayer = new()
+                {
+                    uniqueID = InventoryManager.Instance.GenerateUniqueID(),
+                    id = item.id,
+                    name = item.name,
+                    moneyPlus = item.moneyPlus
+                };
+
+                playerData.items.Add(itemPlayer);
                 playerData.money -= item.buy;
 
                 GameManager.Instance.SaveData(playerData, "playerData");
-                Debug.Log(playerData);
                 MainWorldManager.Instance.UpdateMoneyUI();
+                InventoryManager.Instance.GenerateItemInventoryUI();
             }
         }
 

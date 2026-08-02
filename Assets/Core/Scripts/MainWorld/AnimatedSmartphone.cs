@@ -10,9 +10,11 @@ namespace Main.World
         [SerializeField] private Button phoneIcon;
         [SerializeField] private Button phoneExitIcon;
         [SerializeField] private Button shopAPK;
+        [SerializeField] private Button inventoryAPK;
         [SerializeField] private Button pinjolLegalAPK;
         [SerializeField] private Button pinjolIlegalAPK;
         [SerializeField] private RectTransform shopPanel;
+        [SerializeField] private RectTransform inventoryPanel;
         [SerializeField] private RectTransform pinjolLegalPanel;
         [SerializeField] private RectTransform pinjolIllegalPanel;
         [SerializeField] private RectTransform phone;
@@ -27,6 +29,7 @@ namespace Main.World
             shopAPK.onClick.AddListener(() => OnAPKClicked(shopPanel));
             pinjolLegalAPK.onClick.AddListener(() => OnAPKClicked(pinjolLegalPanel));
             pinjolIlegalAPK.onClick.AddListener(() => OnAPKClicked(pinjolIllegalPanel));
+            inventoryAPK.onClick.AddListener(() => OnAPKClicked(inventoryPanel));
         }
 
         private void OnAPKClicked(RectTransform panel)
@@ -38,7 +41,7 @@ namespace Main.World
             float openDuration = 0.4f;
             Ease openEase = Ease.OutSine;
 
-            float closeTargetY = -578f;
+            float closeTargetY = -606f;
             float closeAlpha = 0f;
             float closeDuration = 0.4f;
             Ease closeEase = Ease.InSine;

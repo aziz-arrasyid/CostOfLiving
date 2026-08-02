@@ -22,7 +22,16 @@ namespace Game.System
     {
         public int money;
         public float sanity;
-        public List<ItemShop> items;
+        public List<ItemPlayer> items;
+    }
+
+    [Serializable]
+    public class ItemPlayer
+    {
+        public string uniqueID;
+        public string id;
+        public string name;
+        public int moneyPlus;
     }
 
     [Serializable]
