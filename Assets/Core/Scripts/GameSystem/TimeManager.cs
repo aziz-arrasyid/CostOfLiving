@@ -126,6 +126,7 @@ namespace Game.System
                 currentDate = currentDate.AddDays(1);
                 SaveDateData();
                 isTimeRunning = false;
+                TimeStart();
             }
 
             CheckWorkingHoursReadyStatus();
