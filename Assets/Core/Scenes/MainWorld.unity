@@ -6602,6 +6602,8 @@ MonoBehaviour:
   modelOnlineLoansLegal: []
   modelOnlineLoansIllegal: []
   availableLoanFunds: 8
+  legalDisplay: []
+  illegalDisplay: []
   loansLegalContent: {fileID: 1659447676}
   loansIllegalContent: {fileID: 286682699}
   loansColor:
@@ -6612,12 +6614,12 @@ MonoBehaviour:
   minLoanTenureDaysLegal: 30
   maxLoanTenureDaysLegal: 90
   minDailyInterestRateLegal: 0.2
-  maxDailyInterestRateLegal: 1
-  minReceivedAmountIllegal: 10
-  maxReceivedAmountIllegal: 26
+  maxDailyInterestRateLegal: 0.5
+  minReceivedAmountIllegal: 60
+  maxReceivedAmountIllegal: 500
   minLoanTenureDaysIllegal: 30
   maxLoanTenureDaysIllegal: 90
-  minDailyInterestRateIllegal: 0.2
+  minDailyInterestRateIllegal: 0.5
   maxDailyInterestRateIllegal: 2
 --- !u!1 &1096525927
 GameObject:
@@ -7398,7 +7400,7 @@ PrefabInstance:
       objectReference: {fileID: 877516373}
     - target: {fileID: 5535301183232648480, guid: 0c2b9dd4de9748844bb915b35aa8f8a2, type: 3}
       propertyPath: realMinutesPerDay
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5535301183232648480, guid: 0c2b9dd4de9748844bb915b35aa8f8a2, type: 3}
       propertyPath: SetToWorkingFinish

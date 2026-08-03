@@ -13,6 +13,8 @@ namespace Main.World
         [SerializeField] private List<ModelOnlineLoans> modelOnlineLoansLegal;
         [SerializeField] private List<ModelOnlineLoans> modelOnlineLoansIllegal;
         [SerializeField] private int availableLoanFunds;
+        [SerializeField] private List<GameObject> legalDisplay;
+        [SerializeField] private List<GameObject> illegalDisplay;
 
         [Header("UI")]
         [SerializeField] private RectTransform loansLegalContent;
@@ -59,8 +61,35 @@ namespace Main.World
             GenerateLoanFunds(isLegal: false);
         }
 
+        private void OnEnable()
+        {
+            TimeManager.OnDateChange += () => GenerateLoanFunds(true);
+            TimeManager.OnDateChange += () => GenerateLoanFunds(false);
+        }
+
+        private void OnDisable()
+        {
+            TimeManager.OnDateChange -= () => GenerateLoanFunds(true);
+            TimeManager.OnDateChange -= () => GenerateLoanFunds(false);
+        }
+
         private void GenerateLoanFunds(bool isLegal)
         {
+            if (isLegal)
+            {
+                if (modelOnlineLoansLegal.Count > 0)
+                {
+                    modelOnlineLoansLegal.Clear();
+                }
+            }
+            else
+            {
+                if (modelOnlineLoansIllegal.Count > 0)
+                {
+                    modelOnlineLoansIllegal.Clear();
+                }
+            }
+
             for (int i = 0; i < availableLoanFunds; i++)
             {
                 int minReceivedAmount = isLegal ? minReceivedAmountLegal : minReceivedAmountIllegal;
@@ -104,28 +133,50 @@ namespace Main.World
         {
             if (isLegal)
             {
+                if (legalDisplay.Count > 0)
+                {
+                    for (int i = 0; i < legalDisplay.Count; i++)
+                    {
+                        Destroy(legalDisplay[i]);
+                    }
+
+                    legalDisplay.Clear();
+                }
+
                 for (int i = 0; i < modelOnlineLoansLegal.Count; i++)
                 {
-                    GameObject newLoansItems = Instantiate(loansItem);
-                    newLoansItems.transform.SetParent(loansLegalContent);
+                    GameObject newLoansItems = Instantiate(loansItem, loansLegalContent);
 
                     ItemPinjol itemPinjol = newLoansItems.GetComponent<ItemPinjol>();
 
                     itemPinjol.modelOnlineLoans = modelOnlineLoansLegal[i];
                     itemPinjol.UpdateUI(loansColor[0]);
+
+                    legalDisplay.Add(newLoansItems);
                 }
             }
             else
             {
+                if (illegalDisplay.Count > 0)
+                {
+                    for (int i = 0; i < illegalDisplay.Count; i++)
+                    {
+                        Destroy(illegalDisplay[i]);
+                    }
+
+                    illegalDisplay.Clear();
+                }
+
                 for (int i = 0; i < modelOnlineLoansIllegal.Count; i++)
                 {
-                    GameObject newLoansItems = Instantiate(loansItem);
-                    newLoansItems.transform.SetParent(loansIllegalContent);
+                    GameObject newLoansItems = Instantiate(loansItem, loansIllegalContent);
 
                     ItemPinjol itemPinjol = newLoansItems.GetComponent<ItemPinjol>();
 
                     itemPinjol.modelOnlineLoans = modelOnlineLoansIllegal[i];
                     itemPinjol.UpdateUI(loansColor[1]);
+
+                    illegalDisplay.Add(newLoansItems);
                 }
             }
         }

@@ -23,6 +23,7 @@ namespace Game.System
     public class TimeManager : MonoBehaviour
     {
         public static TimeManager Instance { private set; get; }
+        public static Action OnDateChange;
 
         [Header("Base Time Setting")]
         [Range(1, 60)]
@@ -127,6 +128,9 @@ namespace Game.System
                 SaveDateData();
                 isTimeRunning = false;
                 TimeStart();
+                Debug.Log("hari berganti");
+
+                OnDateChange?.Invoke();
             }
 
             CheckWorkingHoursReadyStatus();
