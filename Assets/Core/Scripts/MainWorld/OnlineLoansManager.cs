@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using Game.System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Linq;
 
 namespace Main.World
 {
@@ -17,9 +19,22 @@ namespace Main.World
         [SerializeField] private List<GameObject> illegalDisplay;
 
         [Header("UI")]
-        [SerializeField] private RectTransform loansLegalContent;
-        [SerializeField] private RectTransform loansIllegalContent;
+        [SerializeField] private RectTransform legalPanel;
+        [SerializeField] private RectTransform IllegalPanel;
+        [SerializeField] private List<Sprite> navigationBtnColor; // 0 = legal, 1 = illegal, 3 = clicked
+        [SerializeField] private Button activeLegalBtn;
+        [SerializeField] private Button activeIllegalBtn;
+        [SerializeField] private Button searchLegalBtn;
+        [SerializeField] private Button searchIllegalBtn;
+        [SerializeField] private RectTransform loanLegalContentActive;
+        [SerializeField] private RectTransform loanIllegalContentActive;
+        [SerializeField] private RectTransform loansLegalContentSearch;
+        [SerializeField] private RectTransform loansIllegalContentSearch;
+        [SerializeField] private RectTransform loansLegalContentDisplay;
+        [SerializeField] private RectTransform loansIllegalContentDisplay;
         [SerializeField] private List<Sprite> loansColor;
+        [SerializeField] private List<RectTransform> loansIllegalContent; // 0 = search, 1 = active
+        [SerializeField] private List<RectTransform> loansLegalContent; // 0 = search, 1 = active
 
         #region Online Loans Legal
         [Header("Online Loans Legal Setting")]
@@ -59,18 +74,61 @@ namespace Main.World
         {
             GenerateLoanFunds(isLegal: true);
             GenerateLoanFunds(isLegal: false);
+
+            loansLegalContent.ForEach(item => { if(item != null) item.gameObject.SetActive(false); } );
+            loansIllegalContent.ForEach(item => { if(item != null) item.gameObject.SetActive(false); } );
+
+            loansLegalContent[0].gameObject.SetActive(true);
+            loansIllegalContent[0].gameObject.SetActive(true);
         }
 
         private void OnEnable()
         {
             TimeManager.OnDateChange += () => GenerateLoanFunds(true);
             TimeManager.OnDateChange += () => GenerateLoanFunds(false);
+
+            AnimatedSmartphone.OnAPKOpened += PanelOpened;
+
+            activeLegalBtn.onClick.AddListener(() => OpenContent(loansLegalContent, 1));
+            searchLegalBtn.onClick.AddListener(() => OpenContent(loansLegalContent, 0));
+
+            activeIllegalBtn.onClick.AddListener(() => OpenContent(loansIllegalContent, 1));
+            searchIllegalBtn.onClick.AddListener(() => OpenContent(loansIllegalContent, 0));
         }
 
         private void OnDisable()
         {
             TimeManager.OnDateChange -= () => GenerateLoanFunds(true);
             TimeManager.OnDateChange -= () => GenerateLoanFunds(false);
+
+            AnimatedSmartphone.OnAPKOpened -= PanelOpened;
+
+            activeLegalBtn.onClick.RemoveListener(() => OpenContent(loansLegalContent, 1));
+            searchLegalBtn.onClick.RemoveListener(() => OpenContent(loansLegalContent, 0));
+
+            activeIllegalBtn.onClick.RemoveListener(() => OpenContent(loansIllegalContent, 1));
+            searchIllegalBtn.onClick.RemoveListener(() => OpenContent(loansIllegalContent, 0));
+        }
+
+        private void PanelOpened(RectTransform panel)
+        {
+            if (panel == legalPanel)
+            {
+                loansLegalContent[0].gameObject.SetActive(true); 
+                loansLegalContent[1].gameObject.SetActive(false); 
+            }
+            else if (panel == IllegalPanel)
+            {
+                loansIllegalContent[0].gameObject.SetActive(true);
+                loansIllegalContent[1].gameObject.SetActive(false);
+            }
+        }
+
+        private void OpenContent(List<RectTransform> content, int index)
+        {
+            int anotherIndex = index == 1 ? 0 : 1;
+            content[index].gameObject.SetActive(true);
+            content[anotherIndex].gameObject.SetActive(false);
         }
 
         private void GenerateLoanFunds(bool isLegal)
@@ -145,7 +203,7 @@ namespace Main.World
 
                 for (int i = 0; i < modelOnlineLoansLegal.Count; i++)
                 {
-                    GameObject newLoansItems = Instantiate(loansItem, loansLegalContent);
+                    GameObject newLoansItems = Instantiate(loansItem, loansLegalContentDisplay);
 
                     ItemPinjol itemPinjol = newLoansItems.GetComponent<ItemPinjol>();
 
@@ -169,7 +227,7 @@ namespace Main.World
 
                 for (int i = 0; i < modelOnlineLoansIllegal.Count; i++)
                 {
-                    GameObject newLoansItems = Instantiate(loansItem, loansIllegalContent);
+                    GameObject newLoansItems = Instantiate(loansItem, loansIllegalContentDisplay);
 
                     ItemPinjol itemPinjol = newLoansItems.GetComponent<ItemPinjol>();
 

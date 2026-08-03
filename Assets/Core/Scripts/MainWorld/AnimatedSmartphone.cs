@@ -1,11 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 using PrimeTween;
+using System;
 
 namespace Main.World
 {
     public class AnimatedSmartphone : MonoBehaviour
     {
+        public static Action<RectTransform> OnAPKOpened;
+
         [Header("UI")]
         [SerializeField] private Button phoneIcon;
         [SerializeField] private Button phoneExitIcon;
@@ -34,6 +37,8 @@ namespace Main.World
 
         private void OnAPKClicked(RectTransform panel)
         {
+            OnAPKOpened?.Invoke(panel);
+            
             if (currentAPKOpen == panel) return;
 
             float openTargetY = 47f;
