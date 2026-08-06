@@ -23,6 +23,7 @@ namespace Game.System
         public int money;
         public float sanity;
         public List<ItemPlayer> items;
+        public List<OnlineLoansPlayer> onlineLoans;
     }
 
     [Serializable]
@@ -32,6 +33,15 @@ namespace Game.System
         public string id;
         public string name;
         public int moneyPlus;
+    }
+
+    [Serializable]
+    public class OnlineLoansPlayer
+    {
+        public OnlineLoansStatus status;
+        public int totalRepayment;
+        public int remainingDays;
+        public int dailyOverduePenalty;
     }
 
     [Serializable]
@@ -67,9 +77,17 @@ namespace Game.System
     [Serializable]
     public class ModelOnlineLoans
     {
+        public OnlineLoansStatus status;
         public int receivedAmount;
         public int loanTenureDays;
         public float dailyInterestRate;
         public int totalRepaymentAmount;
+    }
+
+    public enum OnlineLoansStatus
+    {
+        main,
+        legal,
+        illegal
     }
 }

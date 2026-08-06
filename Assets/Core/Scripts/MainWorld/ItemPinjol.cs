@@ -8,6 +8,7 @@ namespace Main.World
     public class ItemPinjol : MonoBehaviour
     {
         [Header("UI")]
+        public Button takeBtn;
         public TextMeshProUGUI loanMoney;
         public TextMeshProUGUI loanDuration;
         public TextMeshProUGUI loanInterestRate;
@@ -15,6 +16,11 @@ namespace Main.World
         public Image background;
 
         public ModelOnlineLoans modelOnlineLoans;
+
+        private void Start()
+        {
+            takeBtn.onClick.AddListener(() => OnlineLoansManager.Instance.OnTakeBtnClicked(modelOnlineLoans, this));
+        }
 
         public void UpdateUI(Sprite img)
         {

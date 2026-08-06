@@ -1,5 +1,6 @@
 {
     "money": 0,
     "sanity": 100,
-    "items": []
+    "items": [],
+    "onlineLoans": []
 }

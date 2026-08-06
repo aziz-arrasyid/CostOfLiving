@@ -9,14 +9,18 @@ namespace Main.World
 {
     public class OnlineLoansManager : MonoBehaviour
     {
+        public static OnlineLoansManager Instance { private set; get; }
         [Header("Prefabs")]
         [SerializeField] private GameObject loansItem;
+        [SerializeField] private GameObject myLoansItem;
         [Header("Online Loans Data")]
         [SerializeField] private List<ModelOnlineLoans> modelOnlineLoansLegal;
         [SerializeField] private List<ModelOnlineLoans> modelOnlineLoansIllegal;
         [SerializeField] private int availableLoanFunds;
         [SerializeField] private List<GameObject> legalDisplay;
         [SerializeField] private List<GameObject> illegalDisplay;
+        [SerializeField] private List<GameObject> myPinjolLegalDisplay;
+        [SerializeField] private List<GameObject> myPinjolIllegalDisplay;
 
         [Header("UI")]
         [SerializeField] private RectTransform legalPanel;
@@ -32,6 +36,8 @@ namespace Main.World
         [SerializeField] private RectTransform loansIllegalContentSearch;
         [SerializeField] private RectTransform loansLegalContentDisplay;
         [SerializeField] private RectTransform loansIllegalContentDisplay;
+        [SerializeField] private RectTransform loansLegalContentActiveDisplay;
+        [SerializeField] private RectTransform loansIllegalContentActiveDisplay;
         [SerializeField] private List<Sprite> loansColor;
         [SerializeField] private List<RectTransform> loansIllegalContent; // 0 = search, 1 = active
         [SerializeField] private List<RectTransform> loansLegalContent; // 0 = search, 1 = active
@@ -70,13 +76,25 @@ namespace Main.World
         [SerializeField] private float maxDailyInterestRateIllegal;
         #endregion
 
+        private void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
+
         private void Start()
         {
             GenerateLoanFunds(isLegal: true);
             GenerateLoanFunds(isLegal: false);
 
-            loansLegalContent.ForEach(item => { if(item != null) item.gameObject.SetActive(false); } );
-            loansIllegalContent.ForEach(item => { if(item != null) item.gameObject.SetActive(false); } );
+            loansLegalContent.ForEach(item => { if (item != null) item.gameObject.SetActive(false); });
+            loansIllegalContent.ForEach(item => { if (item != null) item.gameObject.SetActive(false); });
 
             loansLegalContent[0].gameObject.SetActive(true);
             loansIllegalContent[0].gameObject.SetActive(true);
@@ -110,12 +128,118 @@ namespace Main.World
             searchIllegalBtn.onClick.RemoveListener(() => OpenContent(loansIllegalContent, 0));
         }
 
+        public void OnTakeBtnClicked(ModelOnlineLoans onlineLoans, ItemPinjol loans)
+        {
+            int totalPenalty = 0;
+
+            switch (onlineLoans.status)
+            {
+                case OnlineLoansStatus.legal:
+                    totalPenalty = Mathf.RoundToInt(onlineLoans.receivedAmount * (onlineLoans.dailyInterestRate / 100f)) + 15000;
+                    break;
+                case OnlineLoansStatus.illegal:
+                    totalPenalty = Mathf.RoundToInt(onlineLoans.receivedAmount * (onlineLoans.dailyInterestRate / 100f)) * 2;
+                    break;
+            }
+
+            OnlineLoansPlayer newOnlineLoans = new()
+            {
+                status = onlineLoans.status,
+                totalRepayment = onlineLoans.totalRepaymentAmount,
+                remainingDays = onlineLoans.loanTenureDays,
+                dailyOverduePenalty = totalPenalty
+            };
+
+            PlayerData playerData = GameManager.Instance.LoadData<PlayerData>("playerData");
+            playerData.onlineLoans.Add(newOnlineLoans);
+            UpdateAddMyPinjolUI(newOnlineLoans, loans);
+
+            GameManager.Instance.SaveData(playerData, "playerData");
+        }
+
+        private void UpdateAddMyPinjolUI(OnlineLoansPlayer onlineLoansPlayer, ItemPinjol loans)
+        {
+            ModelOnlineLoans onlineLoans = loans.modelOnlineLoans;
+
+            switch (onlineLoansPlayer.status)
+            {
+                case OnlineLoansStatus.legal:
+                    GameObject myLegalObj = Instantiate(myLoansItem, loansLegalContentActiveDisplay);
+                    myLegalObj.GetComponent<ItemMyPinjol>().onlineLoansPlayer = onlineLoansPlayer;
+                    myPinjolLegalDisplay.Add(myLegalObj);
+
+                    modelOnlineLoansLegal.Remove(onlineLoans);
+
+                    if (legalDisplay.Contains(loans.gameObject))
+                    {
+                        Destroy(loans.gameObject);
+                        legalDisplay.Remove(loans.gameObject);
+                    }
+                    break;
+                case OnlineLoansStatus.illegal:
+                    GameObject myIllegalObj = Instantiate(myLoansItem, loansIllegalContentActiveDisplay);
+                    myIllegalObj.GetComponent<ItemMyPinjol>().onlineLoansPlayer = onlineLoansPlayer;
+                    myPinjolIllegalDisplay.Add(myIllegalObj);
+
+                    modelOnlineLoansIllegal.Remove(onlineLoans);
+
+                    if (illegalDisplay.Contains(loans.gameObject))
+                    {
+                        Destroy(loans.gameObject);
+                        illegalDisplay.Remove(loans.gameObject);
+                    }
+                    break;
+            }
+        }
+
+        private void UpdateMyLoansUI()
+        {
+            if (myPinjolLegalDisplay.Count > 0)
+            {
+                for (int i = 0; i < myPinjolLegalDisplay.Count; i++)
+                {
+                    Destroy(myPinjolLegalDisplay[i]);
+                }
+
+                myPinjolLegalDisplay.Clear();
+            }
+
+            if (myPinjolIllegalDisplay.Count > 0)
+            {
+                for (int i = 0; i < myPinjolIllegalDisplay.Count; i++)
+                {
+                    Destroy(myPinjolIllegalDisplay[i]);
+                }
+
+                myPinjolIllegalDisplay.Clear();
+            }
+
+            PlayerData playerData = GameManager.Instance.LoadData<PlayerData>("playerData");
+            List<OnlineLoansPlayer> onlineLoansPlayer = playerData.onlineLoans;
+
+            for (int i = 0; i < onlineLoansPlayer.Count; i++)
+            {
+                if (onlineLoansPlayer[i].status == OnlineLoansStatus.legal)
+                {
+                    GameObject myLegalObj = Instantiate(myLoansItem, loansLegalContentActiveDisplay);
+                    myLegalObj.GetComponent<ItemMyPinjol>().onlineLoansPlayer = onlineLoansPlayer[i];
+                    myPinjolLegalDisplay.Add(myLegalObj);
+                }
+                else if (onlineLoansPlayer[i].status == OnlineLoansStatus.illegal)
+                {
+                    GameObject myIllegalObj = Instantiate(myLoansItem, loansIllegalContentActiveDisplay);
+                    myIllegalObj.GetComponent<ItemMyPinjol>().onlineLoansPlayer = onlineLoansPlayer[i];
+                    myPinjolIllegalDisplay.Add(myIllegalObj);
+                }
+            }
+        }
+
         private void PanelOpened(RectTransform panel)
         {
             if (panel == legalPanel)
             {
-                loansLegalContent[0].gameObject.SetActive(true); 
-                loansLegalContent[1].gameObject.SetActive(false); 
+                loansLegalContent[0].gameObject.SetActive(true);
+                loansLegalContent[1].gameObject.SetActive(false);
             }
             else if (panel == IllegalPanel)
             {
@@ -163,10 +287,11 @@ namespace Main.World
                 int loanTenureDays = Random.Range(minLoanTenureDays, maxLoanTenureDays);
                 float dailyInterestRate = Mathf.Round(Random.Range(minDailyInterestRate, maxDailyInterestRate) * 10f) / 10f;
 
-                int totalRepaymentAmount = receivedAmount + (int)(receivedAmount * (dailyInterestRate / 100.0) * loanTenureDays);
+                int totalRepaymentAmount = receivedAmount + Mathf.RoundToInt(receivedAmount * (dailyInterestRate / 100f) * loanTenureDays);
 
                 ModelOnlineLoans newOnlineLoans = new()
                 {
+                    status = isLegal ? OnlineLoansStatus.legal : OnlineLoansStatus.illegal,
                     receivedAmount = receivedAmount,
                     loanTenureDays = loanTenureDays,
                     dailyInterestRate = dailyInterestRate,
@@ -185,6 +310,8 @@ namespace Main.World
 
             UpdateOnlineLoansUI(true);
             UpdateOnlineLoansUI(false);
+
+            UpdateMyLoansUI();
         }
 
         private void UpdateOnlineLoansUI(bool isLegal)
