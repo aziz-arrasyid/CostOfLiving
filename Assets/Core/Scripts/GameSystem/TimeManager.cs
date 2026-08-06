@@ -127,10 +127,9 @@ namespace Game.System
                 currentDate = currentDate.AddDays(1);
                 SaveDateData();
                 isTimeRunning = false;
-                TimeStart();
-                Debug.Log("hari berganti");
-
                 OnDateChange?.Invoke();
+
+                TimeStart();
             }
 
             CheckWorkingHoursReadyStatus();

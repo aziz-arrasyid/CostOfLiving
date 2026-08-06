@@ -98,6 +98,8 @@ namespace Main.World
 
             loansLegalContent[0].gameObject.SetActive(true);
             loansIllegalContent[0].gameObject.SetActive(true);
+
+            UpdateMyLoansUI();
         }
 
         private void OnEnable()
@@ -112,6 +114,8 @@ namespace Main.World
 
             activeIllegalBtn.onClick.AddListener(() => OpenContent(loansIllegalContent, 1));
             searchIllegalBtn.onClick.AddListener(() => OpenContent(loansIllegalContent, 0));
+
+            TimeManager.OnDateChange += UpdateDataMyLoansPerDay;
         }
 
         private void OnDisable()
@@ -126,6 +130,8 @@ namespace Main.World
 
             activeIllegalBtn.onClick.RemoveListener(() => OpenContent(loansIllegalContent, 1));
             searchIllegalBtn.onClick.RemoveListener(() => OpenContent(loansIllegalContent, 0));
+
+            TimeManager.OnDateChange -= UpdateDataMyLoansPerDay;
         }
 
         public void OnTakeBtnClicked(ModelOnlineLoans onlineLoans, ItemPinjol loans)
@@ -144,24 +150,40 @@ namespace Main.World
 
             OnlineLoansPlayer newOnlineLoans = new()
             {
-                status = onlineLoans.status,
-                totalRepayment = onlineLoans.totalRepaymentAmount,
-                remainingDays = onlineLoans.loanTenureDays,
-                dailyOverduePenalty = totalPenalty
+                Status = onlineLoans.status,
+                TotalRepayment = onlineLoans.totalRepaymentAmount,
+                RemainingDays = onlineLoans.loanTenureDays,
+                DailyOverduePenalty = totalPenalty
             };
 
             PlayerData playerData = GameManager.Instance.LoadData<PlayerData>("playerData");
+            playerData.money += onlineLoans.receivedAmount;
             playerData.onlineLoans.Add(newOnlineLoans);
+
             UpdateAddMyPinjolUI(newOnlineLoans, loans);
 
             GameManager.Instance.SaveData(playerData, "playerData");
+        }
+
+        private void UpdateDataMyLoansPerDay()
+        {
+            PlayerData playerData = GameManager.Instance.LoadData<PlayerData>("playerData");
+
+            for (int i = 0; i < playerData.onlineLoans.Count; i++)
+            {
+                playerData.onlineLoans[i].RemainingDays -= 1;
+            }
+
+            GameManager.Instance.SaveData(playerData, "playerData");
+
+            UpdateMyLoansUI();
         }
 
         private void UpdateAddMyPinjolUI(OnlineLoansPlayer onlineLoansPlayer, ItemPinjol loans)
         {
             ModelOnlineLoans onlineLoans = loans.modelOnlineLoans;
 
-            switch (onlineLoansPlayer.status)
+            switch (onlineLoansPlayer.Status)
             {
                 case OnlineLoansStatus.legal:
                     GameObject myLegalObj = Instantiate(myLoansItem, loansLegalContentActiveDisplay);
@@ -219,13 +241,13 @@ namespace Main.World
 
             for (int i = 0; i < onlineLoansPlayer.Count; i++)
             {
-                if (onlineLoansPlayer[i].status == OnlineLoansStatus.legal)
+                if (onlineLoansPlayer[i].Status == OnlineLoansStatus.legal)
                 {
                     GameObject myLegalObj = Instantiate(myLoansItem, loansLegalContentActiveDisplay);
                     myLegalObj.GetComponent<ItemMyPinjol>().onlineLoansPlayer = onlineLoansPlayer[i];
                     myPinjolLegalDisplay.Add(myLegalObj);
                 }
-                else if (onlineLoansPlayer[i].status == OnlineLoansStatus.illegal)
+                else if (onlineLoansPlayer[i].Status == OnlineLoansStatus.illegal)
                 {
                     GameObject myIllegalObj = Instantiate(myLoansItem, loansIllegalContentActiveDisplay);
                     myIllegalObj.GetComponent<ItemMyPinjol>().onlineLoansPlayer = onlineLoansPlayer[i];
@@ -310,8 +332,6 @@ namespace Main.World
 
             UpdateOnlineLoansUI(true);
             UpdateOnlineLoansUI(false);
-
-            UpdateMyLoansUI();
         }
 
         private void UpdateOnlineLoansUI(bool isLegal)

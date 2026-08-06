@@ -38,10 +38,63 @@ namespace Game.System
     [Serializable]
     public class OnlineLoansPlayer
     {
-        public OnlineLoansStatus status;
-        public int totalRepayment;
-        public int remainingDays;
-        public int dailyOverduePenalty;
+        [NonSerialized] public Action OnDataChanged;
+
+        [SerializeField] private OnlineLoansStatus status;
+        public OnlineLoansStatus Status
+        {
+            get { return status; }
+            set
+            {
+                if (status != value)
+                {
+                    status = value;
+                    OnDataChanged?.Invoke();
+                }
+            }
+        }
+
+        [SerializeField] private int totalRepayment;
+        public int TotalRepayment
+        {
+            get { return totalRepayment; }
+            set
+            {
+                if (value != totalRepayment)
+                {
+                    totalRepayment = value;
+                    OnDataChanged?.Invoke();
+                }
+            }
+        }
+
+        [SerializeField] private int remainingDays;
+        public int RemainingDays
+        {
+            get { return remainingDays; }
+            set
+            {
+                if (remainingDays != value)
+                {
+                    remainingDays = value;
+                    OnDataChanged?.Invoke();
+                }
+            }
+        }
+
+        [SerializeField] private int dailyOverduePenalty;
+        public int DailyOverduePenalty
+        {
+            get { return dailyOverduePenalty; }
+            set
+            {
+                if (dailyOverduePenalty != value)
+                {
+                    dailyOverduePenalty = value;
+                    OnDataChanged?.Invoke();
+                }
+            }
+        }
     }
 
     [Serializable]

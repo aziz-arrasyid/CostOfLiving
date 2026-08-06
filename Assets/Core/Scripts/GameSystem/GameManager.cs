@@ -9,6 +9,7 @@ namespace Game.System
     {
         public static GameManager Instance;
         public Settings settings;
+        // public PlayerData playerData;
 
         private void Awake()
         {
@@ -27,6 +28,7 @@ namespace Game.System
         private void Start()
         {
             settings = LoadData<Settings>("settings");
+            // playerData = LoadData<PlayerData>("playerData") ?? new();
         }
 
         private void NewData<T>(string file) where T : new()
